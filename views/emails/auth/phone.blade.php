@@ -1,0 +1,1 @@
+微乐验证码: {{$token}}.请在{{ Config::get('auth.reminder.phoneexpire', 10) }}分钟内填写。【测试科技】
