@@ -9,23 +9,23 @@ use Carbon\Carbon;
 
 class Member extends \Eloquent implements UserInterface, RemindableInterface {
 
-	use UserTrait, RemindableTrait;
+    use UserTrait, RemindableTrait;
 
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
-	protected $table = 'members';
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = 'members';
 
-	/**
-	 * The attributes excluded from the model's JSON form.
-	 *
-	 * @var array
-	 */
-	protected $hidden = array('password', 'remember_token');
+    /**
+     * The attributes excluded from the model's JSON form.
+     *
+     * @var array
+     */
+    protected $hidden = array('password', 'remember_token');
 
-	protected $guarded = [];
+    protected $guarded = [];
 
 
 
@@ -33,8 +33,8 @@ class Member extends \Eloquent implements UserInterface, RemindableInterface {
     public function friends()
     {
         return $this->belongsToMany('Weile\Member', 'friends_users', 'member_id', 'friend_id');
-    }  
- 
+    }
+
     public function addFriend(Member $user)
     {
         $this->friends()->attach($user->id, ['updated_at' => new Carbon]);
@@ -45,11 +45,11 @@ class Member extends \Eloquent implements UserInterface, RemindableInterface {
         $user->save();
 
     }
- 
+
     public function removeFriend(Member $user)
     {
         $this->friends()->detach($user->id);
-    }	
+    }
 
     //受邀请人
     public function reverseFriends()
@@ -58,11 +58,18 @@ class Member extends \Eloquent implements UserInterface, RemindableInterface {
     }
 
     public function setPasswordAttribute($value) {
-    	 $this->attributes['password'] = \Hash::make($value);
+        $this->attributes['password'] = \Hash::make($value);
     }
 
     public function getPhotoAttribute() {
-         return $this->attributes['photo'] = asset($this->attributes['photo']);
+        return $this->attributes['photo'] = asset($this->attributes['photo']);
+    }
+
+    public function detail() {
+        return $this->hasOne('Weile\MemberDetail', 'member_id', 'id');
+    }
+    public function delivery() {
+        return $this->hasMany('Weile\MemberDelivery', 'member_id', 'id');
     }
 
 }

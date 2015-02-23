@@ -17,6 +17,10 @@ class RepositoryServiceProvider extends ServiceProvider
             'Weile\Repositories\MemberRepositoryInterface',
             'Weile\Repositories\Eloquent\MemberRepository'
         );
+        $this->app->bind(
+            'Weile\Repositories\BaseDataRepositoryInterface',
+            'Weile\Repositories\Eloquent\BaseDataRepository'
+        );
 
     }
 }

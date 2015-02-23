@@ -122,7 +122,10 @@ return array(
 		'Illuminate\View\ViewServiceProvider',
 		// 'Illuminate\Workbench\WorkbenchServiceProvider',
 
-		'Way\Generators\GeneratorsServiceProvider',
+        'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
+
+
+        'Way\Generators\GeneratorsServiceProvider',
 		'Cartalyst\Sentry\SentryServiceProvider',
 		'Frozennode\Administrator\AdministratorServiceProvider',
 		'Gloudemans\Shoppingcart\ShoppingcartServiceProvider',
@@ -131,7 +134,7 @@ return array(
 
 
         'Weile\Providers\RepositoryServiceProvider',
-        
+
         'Weile\Providers\UploadServiceProvider',
         'Weile\Providers\EventServiceProvider',
 		'Weile\Providers\ReminderServiceProvider',

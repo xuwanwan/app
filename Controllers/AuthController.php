@@ -9,19 +9,8 @@ use Weile\Repositories\MemberRepositoryInterface;
 
 class AuthController extends BaseController
 {
-    /**
-     * User Repository.
-     *
-     * @var \Tricks\Repositories\UserRepositoryInterface
-     */
     protected $users;
 
-    /**
-     * Create a new AuthController instance.
-     *
-     * @param  \Tricks\Repositories\UserRepositoryInterface $users
-     * @return void
-     */
     public function __construct(MemberRepositoryInterface $member)
     {
         parent::__construct();

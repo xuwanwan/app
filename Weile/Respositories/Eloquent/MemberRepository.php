@@ -16,23 +16,11 @@ use Weile\Repositories\MemberRepositoryInterface;
 
 class MemberRepository extends AbstractRepository implements MemberRepositoryInterface
 {
-    /**
-     * Create a new DbUserRepository instance.
-     *
-     * @param  \Tricks\User  $user
-     * @return void
-     */
     public function __construct(Member $member)
     {
         $this->model = $member;
     }
 
-    /**
-     * Find all users paginated.
-     *
-     * @param  int  $perPage
-     * @return Illuminate\Database\Eloquent\Collection|\Tricks\User[]
-     */
     public function findAllPaginated($perPage = 200)
     {
         return $this->model
@@ -40,23 +28,11 @@ class MemberRepository extends AbstractRepository implements MemberRepositoryInt
                     ->paginate($perPage);
     }
 
-    /**
-     * Find a user by it's username.
-     *
-     * @param  string $username
-     * @return \Tricks\User
-     */
     public function findByUsername($username)
     {
         return $this->model->whereUsername($username)->first();
     }
 
-    /**
-     * Find a user by it's email.
-     *
-     * @param  string $email
-     * @return \Tricks\User
-     */
     public function findByEmail($email)
     {
         return $this->model->whereEmail($email)->first();
@@ -82,12 +58,6 @@ class MemberRepository extends AbstractRepository implements MemberRepositoryInt
         throw new UserNotFoundException('The user "' . $username . '" does not exist!');
     }
 
-    /**
-     * Create a new user in the database.
-     *
-     * @param  array  $data
-     * @return \Tricks\User
-     */
     public function create(array $data)
     {
         $member = $this->getNew();
@@ -123,24 +93,11 @@ class MemberRepository extends AbstractRepository implements MemberRepositoryInt
 
 
 
-    /**
-     * Returns whether the given username is allowed to be used.
-     *
-     * @param  string  $username
-     * @return bool
-     */
     protected function usernameIsAllowed($username)
     {
         return ! in_array(strtolower($username), Config::get('config.forbidden_usernames'));
     }
 
-    /**
-     * Update the user's settings.
-     *
-     * @param  \Tricks\User  $user
-     * @param  array $data
-     * @return \Tricks\User
-     */
     public function updateSettings(Member $member, array $data)
     {
         $user->username = $data['username'];
@@ -165,11 +122,6 @@ class MemberRepository extends AbstractRepository implements MemberRepositoryInt
         return app('Weile\Services\Forms\RegistrationForm');
     }
 
-    /**
-     * Get the user settings form service.
-     *
-     * @return \Tricks\Services\Forms\SettingsForm
-     */
     public function getSettingsForm()
     {
         return app('Tricks\Services\Forms\SettingsForm');
