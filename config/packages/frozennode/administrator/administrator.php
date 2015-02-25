@@ -55,6 +55,8 @@ return array(
 //		'users',
 		'后台用户管理' => ['users', 'groups', 'permissions'],
 		'会员管理'	=> ['members'],
+        '分类管理'  => ['categories'],
+        '产品管理' => ['products', 'product_tags'],
 		),
 
 	/**

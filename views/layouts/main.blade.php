@@ -25,5 +25,8 @@
 @include('partials.footer')
 
 </div>
+
+@section('scripts')
+@show
 </body>
 </html>

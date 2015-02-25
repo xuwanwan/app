@@ -42,7 +42,7 @@ class AuthController extends BaseController
         }
         else {
 
-            return $this->redirectBack([ 'login_errors' => true ]);
+            return $this->redirectBack([ 'error' => 'username or password incorrect' ]);
         }
     }
 

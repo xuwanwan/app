@@ -17,6 +17,10 @@ interface MemberRepositoryInterface
 
 
 
-    public function updateSettings(Member $memeber, array $data);
+
+    public function createDelivery(Member $member, array $data);
+    public function getRegistrationForm();
+
+    public function getMemberDeliveryForm();
 }
 

@@ -1,9 +1,3 @@
-@if (count($errors->all()) > 0)
-    <div class="alert alert-danger cms-alert">
-        <a class="close" data-dismiss="alert">×</a>
-        Please check the form below for errors
-    </div>
-@endif
 
 <?php $types = array('success', 'error', 'warning', 'info'); ?>
 

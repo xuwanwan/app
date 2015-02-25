@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
 
 
+use Weile\MemberDelivery;
 use Weile\Services\Forms\SettingsForm;
 use Weile\Services\Forms\RegistrationForm;
 use Weile\Exceptions\MemberNotFoundException;
@@ -98,32 +99,23 @@ class MemberRepository extends AbstractRepository implements MemberRepositoryInt
         return ! in_array(strtolower($username), Config::get('config.forbidden_usernames'));
     }
 
-    public function updateSettings(Member $member, array $data)
-    {
-        $user->username = $data['username'];
-        $user->password = ($data['password'] != '') ? Hash::make($data['password']) : $user->password;
 
-        if ($data['avatar'] != '') {
-            File::move(public_path().'/img/avatar/temp/'.$data['avatar'], 'img/avatar/'.$data['avatar']);
-
-            if ($user->photo) {
-                File::delete(public_path().'/img/avatar/'.$user->photo);
-            }
-
-            $user->photo = $data['avatar'];
-        }
-
-        return $user->save();
+    public function createDelivery(Member $member,array $data) {
+        $fields = array_only($data, ['username', 'phone', 'postalcode', 'district', 'detail']);
+        $de = new MemberDelivery($fields);
+        $member->delivery()->save($de);
     }
 
-
+    public function updateDelivery(Member $member, $id,array $data) {
+        $fields = array_only($data, ['username', 'phone', 'postalcode', 'district', 'detail']);
+        $member->delivery()->where('id', '=', $id)->update($fields);
+    }
     public function getRegistrationForm()
     {
         return app('Weile\Services\Forms\RegistrationForm');
     }
 
-    public function getSettingsForm()
-    {
-        return app('Tricks\Services\Forms\SettingsForm');
+    public function getMemberDeliveryForm() {
+        return app('Weile\Services\Forms\MemberDeliveryForm');
     }
 }

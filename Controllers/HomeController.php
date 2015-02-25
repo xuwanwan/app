@@ -1,6 +1,8 @@
 <?php
 namespace Controllers;
 
+use Weile\District;
+
 class HomeController extends BaseController {
 
 	/*
@@ -18,7 +20,16 @@ class HomeController extends BaseController {
 
 	public function index()
 	{
-		return $this->view('hello');
+        $s = '<p>test</p>
+
+<p><img alt="" src="/kcfinder-3.12/upload/images/IMG_0724(1).PNG" style="height:210px; width:140px" /></p>
+
+<p><img alt="" src="/kcfinder-3.12/upload/images/IMG_0724(2).PNG" style="height:210px; width:140px" /><img src="testl"></p>
+';
+
+        preg_match_all('#<img.*src="(.*)"[^>]*>#Uis', $s, $m);
+        var_dump($m[1]);
+		return 'hello';
 	}
 
 }

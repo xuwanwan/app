@@ -78,7 +78,8 @@ class MembersController extends BaseController {
             if (\Input::has('api')) {
                 return $member_detail->toArray();
             }
-            $this->view('member.detail-edit', compact('member_detail','form_data'));
+            return $member_detail->toArray();
+//            $this->view('member.detail-edit', compact('member_detail','form_data'));
         } else {
             if (\Input::has('api')) {
                 return 'false';

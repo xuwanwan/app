@@ -10,7 +10,7 @@
 {{Form::text('email')}}
 
 {{Form::label('password')}}
-{{Form::text('password')}}
+{{Form::password('password')}}
 
 
 {{Form::submit('Submit')}}

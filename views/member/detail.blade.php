@@ -1,11 +1,6 @@
 
 @section('content')
 
-@if (Session::has('error'))
-Error!
-{{{ Session::get('error') }}}
-@endif
-
 
 {{Form::open(['route'=>'member.detail', 'method'=>'post'])}}
 

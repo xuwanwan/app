@@ -52,7 +52,7 @@ return array(
 	|
 	*/
 
-	'locale' => 'en',
+	'locale' => 'zh-CN',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -131,7 +131,7 @@ return array(
 		'Gloudemans\Shoppingcart\ShoppingcartServiceProvider',
 		'Toin0u\Geotools\GeotoolsServiceProvider',
 		'SimpleSoftwareIO\QrCode\QrCodeServiceProvider',
-
+        'Baum\BaumServiceProvider',
 
         'Weile\Providers\RepositoryServiceProvider',
 
