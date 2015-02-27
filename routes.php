@@ -58,7 +58,15 @@ Route::group(['namespace' => 'Controllers'], function () {
 
 
 
+//产品
 
+    //产品列表页 查、
+    Route::get('products', ['as'=>'products', 'uses'=>'ProductController@index']);
+    Route::get('products/search', ['as'=>'products.search', 'uses'=>'ProductSearchController@search']);
+
+    //产品详情页 添加到购物车、关注
+
+    //购物车操作 增、删、查、改（增加某一产品数量）。
 
 
 //end

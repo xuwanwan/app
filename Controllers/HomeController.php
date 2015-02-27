@@ -1,7 +1,10 @@
 <?php
 namespace Controllers;
 
+use Baum\Node;
+use Illuminate\Database\Eloquent\Collection;
 use Weile\District;
+use Weile\OrderedTreeDistrict;
 
 class HomeController extends BaseController {
 
@@ -20,16 +23,29 @@ class HomeController extends BaseController {
 
 	public function index()
 	{
-        $s = '<p>test</p>
 
-<p><img alt="" src="/kcfinder-3.12/upload/images/IMG_0724(1).PNG" style="height:210px; width:140px" /></p>
+#        $node = District::find(1)->children();
+##        var_dump($node->get()->toArray());
 
-<p><img alt="" src="/kcfinder-3.12/upload/images/IMG_0724(2).PNG" style="height:210px; width:140px" /><img src="testl"></p>
-';
 
-        preg_match_all('#<img.*src="(.*)"[^>]*>#Uis', $s, $m);
-        var_dump($m[1]);
+#        $node = District::select('name')->getParent(533);
+#        $node = District::find(37)->getParentNode();
+#        $node = District::ancestors(533);
+
+        $node = OrderedTreeDistrict::getRoot();
+        var_dump($node);
+        $node = OrderedTreeDistrict::find(95);
+        $sub = $node->getDescendantsAndSelf()->lists('name', 'id');
+        var_dump($sub);
+
+#        var_dump(count($node));
+#        var_dump($node->toArray());
+
+        var_dump(\DB::getQueryLog());
 		return 'hello';
 	}
+
+
+
 
 }

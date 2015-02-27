@@ -17,6 +17,8 @@
 
 <div class="container" >
 
+@include('partials.navigation')
+
 @include('partials.notifications')
 
 @section('content')

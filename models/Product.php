@@ -34,7 +34,7 @@ class Product extends \Eloquent {
     }
 
     public function districts() {
-        return $this->belongsTo('Weile\District', 'district', 'id');
+        return $this->belongsTo('Weile\OrderedTreeDistrict', 'district', 'id');
     }
 
     public function getDistrictPathAttribute() {
@@ -49,6 +49,13 @@ class Product extends \Eloquent {
     public function getDetailPreAttribute() {
         if ($this->detail) {
             return $this->detail->detail;
+        }
+        return '';
+    }
+
+    public function getImgUrlAttribute() {
+        if ($this->attributes['image']) {
+            return asset('uploads/products/thumbs/small/' . $this->attributes['image']);
         }
         return '';
     }
@@ -73,6 +80,7 @@ class Product extends \Eloquent {
         foreach ($m[1] as $item) {
             $data[] = new ProductImg(['path'=>$item]);
         }
+        $this->imgs()->delete();
         $this->imgs()->saveMany($data);
 
         return true;

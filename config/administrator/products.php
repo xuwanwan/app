@@ -64,6 +64,7 @@ return [
         'categories' => [
             'title' => '分类',
             'type' => 'relationship',
+
             'name_field' => 'path',
             'options_sort_field' => 'lft',
         ],
@@ -72,7 +73,7 @@ return [
             'type' => 'relationship',
             'autocomplete' => true,
             'num_options' => 15,
-            'name_field' => 'name',
+#            'name_field' => 'name',
             'search_fields' => array("CONCAT(name, ' ', initials, ' ', pinyin)"),
         ],
         'rank' => [
@@ -80,6 +81,20 @@ return [
         ],
         'evaluation' => [
             'title' => '好评分'
+        ],
+
+        'image' => [
+            'title' => '主图',
+            'type' => 'image',
+            'location' => public_path() . '/uploads/products/originals/',
+            'naming' => 'random',
+            'length' => 20,
+            'size_limit' => 20,
+            'sizes' => array(
+                array(65, 57, 'crop', public_path() . '/uploads/products/thumbs/small/', 100),
+                array(220, 138, 'landscape', public_path() . '/uploads/products/thumbs/medium/', 100),
+                array(383, 276, 'fit', public_path() . '/uploads/products/thumbs/full/', 100)
+            )
         ],
 
         'description' => [
@@ -135,6 +150,7 @@ return [
         'name' => 'required|max:255',
         'name' => 'required|max:255',
         'price' => 'required|integer',
+        'image' => 'required',
         'market_price' => 'required|integer',
         'freight' => 'integer',
         'category' => 'required',

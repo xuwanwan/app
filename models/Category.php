@@ -129,6 +129,12 @@ class Category extends Node {
             ->where('published_date', '<=', \Carbon\Carbon::now());
     }
 
+    public function scopeSelectOptions($query, $title='Select') {
+        $selectVals[0] = $title;
+        $selectVals += $this->lists('name', 'id');
+        return $selectVals;
+    }
+
     public function getPathAttribute()
     {
         $ancestors = $this->getAncestors();
