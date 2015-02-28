@@ -28,7 +28,13 @@
             <td>{{$row->description}}</td>
             <td>{{$row->freight}}</td>
             <td >
-                添加购物车
+                {{Form::open(['url'=>URL::route('shopcart.store'), 'method'=>'POST'])}}
+                {{Form::hidden('id', $row->id)}}
+                {{Form::hidden('name', $row->name)}}
+                {{Form::hidden('qty', 1)}}
+                {{Form::hidden('price', $row->price)}}
+                {{Form::button('添加购物车', ['type'=>'submit','class'=>'btn btn-sm btn-primary'])}}
+                {{Form::close()}}
             </td>
         </tr>
     @endforeach

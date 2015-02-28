@@ -31,4 +31,8 @@ class OrderedTreeDistrict extends Node
         $selectVals += static::whereNull('parent_id')->lists('name', 'id');
         return $selectVals;
     }
+
+    public static function getPathById($id) {
+       return static::find($id)->path;
+    }
 }

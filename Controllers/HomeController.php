@@ -32,9 +32,7 @@ class HomeController extends BaseController {
 #        $node = District::find(37)->getParentNode();
 #        $node = District::ancestors(533);
 
-        $node = OrderedTreeDistrict::getRoot();
-        var_dump($node);
-        $node = OrderedTreeDistrict::find(95);
+        $node = OrderedTreeDistrict::find(1);
         $sub = $node->getDescendantsAndSelf()->lists('name', 'id');
         var_dump($sub);
 

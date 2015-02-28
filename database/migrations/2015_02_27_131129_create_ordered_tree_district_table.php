@@ -16,8 +16,8 @@ class CreateOrderedTreeDistrictTable extends Migration {
 		{
 			$table->increments('id');
             $table->integer('parent_id')->nullable();
-            $table->integer('lft')->nullable();
-            $table->integer('rgt')->nullable();
+            $table->integer('lft')->nullable()->index();
+            $table->integer('rgt')->nullable()->index();
             $table->integer('depth')->nullable();
 
             $table->string('name', 255);

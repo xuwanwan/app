@@ -53,7 +53,7 @@ class MemberDeliveriesController extends BaseController {
         }
 
         $this->members->createDelivery($this->member,\Input::all());
-        return 'success';
+        return $this->redirectRoute('member.delivery.index',[],['success'=>'success']);
 	}
 
 	/**

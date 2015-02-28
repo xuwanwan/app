@@ -67,6 +67,15 @@ Route::group(['namespace' => 'Controllers'], function () {
     //产品详情页 添加到购物车、关注
 
     //购物车操作 增、删、查、改（增加某一产品数量）。
+    Route::resource('shopcart', 'ShopCartController');
+
+    //结算页
+    Route::get('settle', ['as'=>'settle', 'uses' => 'SettleController@settle']);
+    Route::post('settle', [ 'uses' => 'SettleController@makeOrder']);
+
+    //订单页
+    Route::resource('orders', 'OrdersController');
+
 
 
 //end

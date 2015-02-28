@@ -72,4 +72,11 @@ class Member extends \Eloquent implements UserInterface, RemindableInterface {
         return $this->hasMany('Weile\MemberDelivery', 'member_id', 'id');
     }
 
+    public function deliveryDefault() {
+        return $this->hasOne('Weile\MemberDelivery', 'member_id', 'id')->whereDefault(1);
+    }
+
+    public function orders() {
+        return $this->hasMany('ProductOrder', 'member_id', 'id');
+    }
 }
