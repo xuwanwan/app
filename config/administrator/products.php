@@ -109,6 +109,12 @@ return [
             'height' => '130',
             'title' => '优惠活动',
         ],
+        'params' => [
+            'type' => 'textarea',
+            'limit' => '500',
+            'height' => '130',
+            'title' => '参数规格',
+        ],
 
         'detail_pre' => [
             'type' => 'wysiwyg',
@@ -148,7 +154,7 @@ return [
 
     'rules' => array(
         'name' => 'required|max:255',
-        'name' => 'required|max:255',
+        'params' => 'required|max:255',
         'price' => 'required|integer',
         'image' => 'required',
         'market_price' => 'required|integer',

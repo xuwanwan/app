@@ -22,8 +22,7 @@ class AuthController extends BaseController
     public function getLogin()
     {
         if(Auth::check()) {
-            var_dump(Auth::user());
-            exit;
+            return \Redirect::to('member');
         }
 
         $this->view('member.login');
@@ -37,7 +36,7 @@ class AuthController extends BaseController
 
         if (Auth::attempt($credentials, $remember)) {
             //app端应该返回成功数据
-            echo 'success';
+            return \Redirect::to('member');
 #           return $this->redirectIntended(route('user.index'));
         }
         else {
@@ -56,8 +55,19 @@ class AuthController extends BaseController
         $this->view('member.register');
     }
 
-    public function getCode($phone) {
-        app('phonecode')->sendCode($phone);
+    public function postCode() {
+#        $data = array_only(Input::all(), 'phone');
+        $rules = [
+            'phone'=>'required|digits:11',
+        ];
+        $validator = \Validator::make(Input::all(),$rules);
+        if($validator->passes()) {
+            $phone = Input::get('phone');
+            $code = app('phonecode')->sendCode($phone);
+            return $code;
+        }
+        return 0;
+#        return \Redirect::back()->withInput($data)->with();
     }
 
     /**
@@ -67,16 +77,16 @@ class AuthController extends BaseController
      */
     public function postRegister()
     {
-        //手机验证码
-        $phonecode = app('phonecode');
-        if (!$phonecode->validate(\Input::get('phone'), \Input::get('token'))) {
-            return 'phone code invalid';
-        }
 
         $form = $this->users->getRegistrationForm();
 
         if (! $form->isValid()) {
-            return $this->redirectBack([ 'errors' => $form->getErrors() ]);
+            return $this->redirectBack([ 'error' => $form->getErrors() ]);
+        }
+        //手机验证码
+        $phonecode = app('phonecode');
+        if (!$phonecode->validate(\Input::get('phone'), \Input::get('token'))) {
+            return $this->redirectBack([ 'error' => 'phone code error']);
         }
 
         if ($user = $this->users->create($form->getInputData())) {
@@ -88,35 +98,6 @@ class AuthController extends BaseController
  #       return $this->redirectRoute('home');
     }
 
-    /**
-     * Handle Github login.
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function getLoginWithGithub()
-    {
-        if (! Input::has('code')) {
-            Session::keep([ 'url' ]);
-            GithubProvider::authorize();
-        } else {
-            try {
-                $user = Github::register(Input::get('code'));
-                Auth::login($user);
-
-                if (Session::get('password_required')) {
-                    return $this->redirectRoute('user.settings', [], [
-                        'update_password' => true
-                    ]);
-                }
-
-                return $this->redirectIntended(route('user.index'));
-            } catch (GithubEmailNotVerifiedException $e) {
-                return $this->redirectRoute('auth.register', [
-                    'github_email_not_verified' => true
-                ]);
-            }
-        }
-    }
 
     /**
      * Logout the user.

@@ -19,7 +19,7 @@ Route::group(['namespace' => 'Controllers'], function () {
 
     //注册
     //手机验证码
-    Route::get('register/{phone}', 'AuthController@getCode');
+    Route::post('register/code', ['as'=>'auth.code', 'uses'=>'AuthController@postCode']);
     //end
 
     //重置密码

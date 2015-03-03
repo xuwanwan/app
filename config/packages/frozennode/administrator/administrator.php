@@ -58,6 +58,8 @@ return array(
         '分类管理'  => ['categories'],
         '产品管理' => ['products', 'product_tags'],
         '订单管理' => ['orders'],
+        '代理管理' => ['agent','profit_percent'],
+        '商家管理' => ['seller', 'seller_category'],
 		),
 
 	/**

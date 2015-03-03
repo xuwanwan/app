@@ -57,6 +57,11 @@ class Member extends \Eloquent implements UserInterface, RemindableInterface {
         return $this->belongsToMany('Weile\Member', 'friends_users', 'friend_id', 'member_id');
     }
 
+    //收益详细
+    public function paylogs() {
+        return $this->hasMany('Paylog', 'member_id');
+    }
+
     public function setPasswordAttribute($value) {
         $this->attributes['password'] = \Hash::make($value);
     }

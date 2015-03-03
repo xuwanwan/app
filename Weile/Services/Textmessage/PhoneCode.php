@@ -28,7 +28,8 @@ class PhoneCode {
 
 		$this->db->insert($this->getPayload($phone, $token));
 
-		$this->sendSms($token, $phone);		
+		$this->sendSms($token, $phone);
+        return $token;
 	}
 
 

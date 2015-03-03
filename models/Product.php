@@ -17,9 +17,9 @@ class Product extends \Eloquent {
         return $this->belongsToMany('ProductTag', 'product_tags', 'product_id', 'product_tag_id');
     }
 
-    public function params() {
-        return $this->belongsToMany('ProdcutParam', 'product_product_param', 'product_id', 'product_param_id');
-    }
+//    public function params() {
+//        return $this->belongsToMany('ProdcutParam', 'product_product_param', 'product_id', 'product_param_id');
+//    }
 
     public function imgs() {
         return $this->hasMany('ProductImg', 'products_id');
