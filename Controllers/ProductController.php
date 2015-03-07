@@ -23,7 +23,4 @@ class ProductController extends BaseController {
         $this->view('products.index', compact('products'));
     }
 
-    public function search() {
-
-    }
 }

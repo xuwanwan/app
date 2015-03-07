@@ -110,11 +110,15 @@ class HomeController extends BaseController {
 #        var_dump($valid_user);
 
         //获取某一ID的好友
-#        $res = $m->getDescendants(6);
+#        $res = $m->getDescendants(1);
 #        var_dump($res->toArray());
 
-#        $member = Member::find(11);
-#        $member = $member->reverseFriends()->get();
+        $member = Member::find(1);
+#        var_dump($member->toArray());
+        $member = $member->reverseFriends()->get();
+        return $member;
+#        $member = $member->Friends()->get();
+#        var_dump($member->toArray());
 #        var_dump($member->toArray());
 #        $invite_member = $m->findByPhone('18002590105');
 #        $member->addFriend($invite_member);
@@ -122,15 +126,32 @@ class HomeController extends BaseController {
 #        var_dump(count($node));
 #        var_dump($node->toArray());
 
-        echo 1|2|4|8;
-        echo '<br>';
-        echo 3&8;
+#        $coordToGeohash = \Geotools::coordinate(['22.5195530000','114.0715420000']);
+
+// encoding
+#        $encoded = \Geotools::geohash()->encode($coordToGeohash, 6); // 12 is the default length / precision
+// encoded
+#        printf("%s\n", $encoded->getGeohash()); // spey
 #        $member = $m->findById(11)->paylogs()->get();
 #        var_dump($member->toArray());
 
-        var_dump(\DB::getQueryLog());
-		return 'hello';
+#        $order = \CardOrder::create(['order_id'=>123, 'amount'=>12.33]);
+#        $order->cardstoreds()->attach([1]);
+#        $order = \CardOrder::find(1);
+#        var_dump($order->cardstoreds->toArray());
+
+#        $m = \CardStored::find(1);
+#        $m = \CardOrder::find(1);
+#        var_dump($m->orders);
+
+
+#        var_dump(\DB::getQueryLog());
+#		return 'hello';
 	}
+
+    public function test() {
+        return 'hello';
+    }
 
 
 

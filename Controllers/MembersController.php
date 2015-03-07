@@ -42,6 +42,27 @@ class MembersController extends BaseController {
     }
 
 
+    public function location() {
+        $this->view('member.location');
+    }
+
+    public function postLocation() {
+
+        $data = [Input::get('x'), Input::get('y')];
+
+        $coordToGeohash = \Geotools::coordinate($data);
+
+// encoding
+        $encoded = \Geotools::geohash()->encode($coordToGeohash, 6); // 12 is the default length / precision
+// encoded
+//        printf("%s\n", $encoded->getGeohash()); // spey
+        $geo_hash = $encoded->getGeohash();
+
+        //储存位置字段至数据库
+        $this->member->geo_hash = $geo_hash;
+        $this->member->save();
+        return $this->redirectBack(['success'=>'success!']);
+    }
     public function avatar() {
         $this->view('member.avatar');
     }

@@ -16,10 +16,11 @@ class CreateProductsTable extends Migration {
 		{
 			$table->increments('id');
             $table->string('name',1000);
-            $table->decimal('price', 8, 2);
-            $table->decimal('market_price', 8, 2);
+            $table->decimal('price', 16, 2);
+            $table->decimal('cost_price', 16, 2);
+            $table->decimal('market_price', 16, 2);
             $table->integer('sales_volume');
-            $table->decimal('freight', 8, 2)->default(0.00);
+            $table->decimal('freight', 16, 2)->default(0.00);
             $table->integer('country_of_origin');
             $table->text('description');
             $table->text('activities_introduce');

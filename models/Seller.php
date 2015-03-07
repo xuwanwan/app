@@ -27,6 +27,22 @@ class Seller extends \Eloquent {
     public function imgs() {
         return $this->hasMany('SellerImg', 'seller_id');
     }
+    //储值卡
+    public function cardstored() {
+        return $this->hasMany('CardStored', 'seller_id');
+    }
+    //会员卡
+    public function cardvip() {
+        return $this->hasMany('CardVip', 'seller_id');
+    }
+    //代金券
+    public function cardvoucher() {
+        return $this->hasMany('CardVoucher', 'seller_id');
+    }
+    //优惠卡
+    public function cardcoupon() {
+        return $this->hasMany('CardCoupon', 'seller_id');
+    }
 
     public function getDistrictPathAttribute() {
         return \Weile\OrderedTreeDistrict::getPathById($this->district);
@@ -40,6 +56,18 @@ class Seller extends \Eloquent {
         return $this->categories->path;
     }
 
+    public function getMidImgUrlAttribute() {
+        if ($this->attributes['logo']) {
+            return asset('uploads/seller/thumbs/medium/' . $this->attributes['logo']);
+        }
+        return '';
+    }
+    public function getImgUrlAttribute() {
+        if ($this->attributes['logo']) {
+            return asset('uploads/seller/thumbs/small/' . $this->attributes['logo']);
+        }
+        return '';
+    }
     public function getTypeAttribute($type) {
         $return = '';
         switch($type) {
@@ -70,19 +98,22 @@ class Seller extends \Eloquent {
         return '';
     }
 
-
+    //优惠卡
     public function getCardType1Attribute() {
         $card_type = $this->card_type;
         return ($card_type&1)>0;
     }
+    //会员卡
     public function getCardType2Attribute() {
         $card_type = $this->card_type;
         return ($card_type&2)>0;
     }
+    //储值卡
     public function getCardType3Attribute() {
         $card_type = $this->card_type;
         return ($card_type&4)>0;
     }
+    //代金券
     public function getCardType4Attribute() {
         $card_type = $this->card_type;
         return ($card_type&8)>0;
@@ -110,7 +141,15 @@ class Seller extends \Eloquent {
 #        echo $card_type.'-'.$card_type1.'-'.$card_type2;
 #        echo $card_type;
 #        exit;
+        $x = $this->attributes['latitude'];
+        $y = $this->attributes['longitude'];
+        $coordToGeohash = \Geotools::coordinate([$x,$y]);
 
+// encoding
+        $encoded = \Geotools::geohash()->encode($coordToGeohash, 6); // 12 is the default length / precision
+// encoded
+//        printf("%s\n", $encoded->getGeohash()); // spey
+        $this->attributes['geohash'] = $encoded->getGeohash();
         $value = array_pull($this->attributes, 'detail_pre');
         #      var_dump($value);
         parent::save($options);
@@ -133,4 +172,10 @@ class Seller extends \Eloquent {
 
         return true;
     }
+
+    public function newCollection(array $models = array())
+    {
+        return new \Weile\SellerCollection($models);
+    }
+
 }

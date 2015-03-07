@@ -1,6 +1,6 @@
 <nav class="navbar navbar-default" role="navigation">
     <div class="navbar-header">
-        <a class="navbar-brand" href="#">珠宝帮</a>
+        <a class="navbar-brand" href="#">帝享</a>
     </div>
     <div>
         {{Form::open(['url'=>'products/search', 'method'=>'GET', 'class'=>'navbar-form navbar-left', 'role'=>'search'])}}

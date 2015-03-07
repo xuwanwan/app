@@ -89,6 +89,9 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
             }
         }
 
+        if(empty($q)) {
+            $model = $model->orderBy('created_at', 'desc');
+        }
 
         $products = $model->paginate($perPage);
         return $products;

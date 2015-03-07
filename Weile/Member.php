@@ -84,4 +84,15 @@ class Member extends \Eloquent implements UserInterface, RemindableInterface {
     public function orders() {
         return $this->hasMany('ProductOrder', 'member_id', 'id');
     }
+
+    public function cardorders() {
+        return $this->hasMany('CardOrder', 'member_id');
+    }
+
+    public function cardsvip() {
+        return $this->hasMany('Weile\MemberCardVip', 'member_id');
+    }
+    public function cardscoupon() {
+        return $this->hasMany('Weile\MemberCardCoupon', 'member_id');
+    }
 }

@@ -36,8 +36,8 @@ class AuthController extends BaseController
 
         if (Auth::attempt($credentials, $remember)) {
             //app端应该返回成功数据
-            return \Redirect::to('member');
-#           return $this->redirectIntended(route('user.index'));
+#            return \Redirect::to('member');
+           return $this->redirectIntended(url('member'));
         }
         else {
 

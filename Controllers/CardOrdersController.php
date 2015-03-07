@@ -1,40 +1,48 @@
 <?php
 namespace Controllers;
+
+
 use Weile\OrderedTreeDistrict;
 use Weile\Repositories\MemberRepositoryInterface;
 
-class OrdersController extends BaseController {
+class CardOrdersController extends BaseController {
 
     protected $members;
     protected $member;
 
     public function __construct(MemberRepositoryInterface $members) {
 
+        parent::__construct();
+
         $this->beforeFilter('auth');
 
         $this->members = $members;
         $this->member = \Auth::user();
 
-        parent::__construct();
     }
-	/**
-	 * Display a listing of the resource.
-	 * GET /orders
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{
-		//
-        $orders = $this->member->orders;
-//        var_dump($orders);
+    /**
+     * Display a listing of the resource.
+     * GET /orders
+     *
+     * @return Response
+     */
+    public function index()
+    {
+        //
+        $orders = $this->member->cardorders()->recent()->get();
+#        var_dump($orders);
 #        var_dump($orders->toArray());
-        $this->view('orders.list', compact('orders'));
-	}
+        foreach($orders as $v) {
+            var_dump($v->cardvips->first()->toArray());
+            var_dump($v->cardcoupons->first());
+            break;
+        }
+        $this->view('orders.cardlist', compact('orders'));
+    }
 
 	/**
 	 * Show the form for creating a new resource.
-	 * GET /orders/create
+	 * GET /cardorders/create
 	 *
 	 * @return Response
 	 */
@@ -45,7 +53,7 @@ class OrdersController extends BaseController {
 
 	/**
 	 * Store a newly created resource in storage.
-	 * POST /orders
+	 * POST /cardorders
 	 *
 	 * @return Response
 	 */
@@ -56,7 +64,7 @@ class OrdersController extends BaseController {
 
 	/**
 	 * Display the specified resource.
-	 * GET /orders/{id}
+	 * GET /cardorders/{id}
 	 *
 	 * @param  int  $id
 	 * @return Response
@@ -64,16 +72,11 @@ class OrdersController extends BaseController {
 	public function show($id)
 	{
 		//
-        $order = \ProductOrder::with('products')->find($id);
-#        var_dump($order->toArray());
-        $district_path = OrderedTreeDistrict::getPathById($order->district);
-        $this->view('orders.show', compact('order', 'district_path'));
-
 	}
 
 	/**
 	 * Show the form for editing the specified resource.
-	 * GET /orders/{id}/edit
+	 * GET /cardorders/{id}/edit
 	 *
 	 * @param  int  $id
 	 * @return Response
@@ -85,7 +88,7 @@ class OrdersController extends BaseController {
 
 	/**
 	 * Update the specified resource in storage.
-	 * PUT /orders/{id}
+	 * PUT /cardorders/{id}
 	 *
 	 * @param  int  $id
 	 * @return Response
@@ -97,7 +100,7 @@ class OrdersController extends BaseController {
 
 	/**
 	 * Remove the specified resource from storage.
-	 * DELETE /orders/{id}
+	 * DELETE /cardorders/{id}
 	 *
 	 * @param  int  $id
 	 * @return Response
@@ -105,17 +108,6 @@ class OrdersController extends BaseController {
 	public function destroy($id)
 	{
 		//
-#        var_dump($id);
-        $order = \ProductOrder::find($id);
-        //软删除
-        $order->delete();
-        //强制删除
-#        $order->forceDelete();
-#        $order->products()->detach(7);
-
-
-        return \Redirect::back()->with(['success'=>'success!']);
-
 	}
 
 }

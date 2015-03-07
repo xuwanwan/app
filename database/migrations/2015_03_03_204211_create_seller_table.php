@@ -26,8 +26,8 @@ class CreateSellerTable extends Migration {
             $table->text('privilege');
             $table->text('introduce');
             $table->text('services');
-            $table->decimal('latitude', 18, 6);
-            $table->decimal('longitude', 18, 6);
+            $table->decimal('latitude', 18, 8);
+            $table->decimal('longitude', 18, 8);
             $table->string('geohash');
             $table->decimal('evaluation', 8, 1);
 			$table->timestamps();

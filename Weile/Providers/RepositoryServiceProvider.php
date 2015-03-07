@@ -25,6 +25,10 @@ class RepositoryServiceProvider extends ServiceProvider
             'Weile\Repositories\ProductRepositoryInterface',
             'Weile\Repositories\Eloquent\ProductRepository'
         );
+        $this->app->bind(
+            'Weile\Repositories\SellerRepositoryInterface',
+            'Weile\Repositories\Eloquent\SellerRepository'
+        );
 
     }
 }

@@ -22,9 +22,9 @@ class CreateMembersTable extends Migration {
 			$table->string('photo')->nullable()->default(NULL);
 			$table->integer('level')->unsigned()->default(0);
 			$table->integer('score')->unsigned()->default(0);
-			$table->decimal('income_yesterday',10, 3)->default(0.000);
-			$table->decimal('income_total', 10, 3)->default(0.000);
-			$table->decimal('balance', 10, 3)->default(0.000);
+			$table->decimal('income_yesterday',16, 3)->default(0.000);
+			$table->decimal('income_total', 16, 3)->default(0.000);
+			$table->decimal('balance', 16, 3)->default(0.000);
 			$table->integer('newfans_yesterday')->unsigned()->default(0);
 			$table->integer('fans_direct')->unsigned()->default(0);
 			$table->integer('fans_related')->unsigned()->default(0);

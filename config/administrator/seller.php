@@ -112,6 +112,12 @@ return [
             'height' => '130',
             'title' => '会员特权',
         ],
+        'introduce' => [
+            'type' => 'textarea',
+            'limit' => '500',
+            'height' => '130',
+            'title' => '商家介绍',
+        ],
         'services' => [
             'type' => 'textarea',
             'limit' => '500',

@@ -6,6 +6,7 @@ Route::pattern('id', '\d+');
 
 Route::group(['namespace' => 'Controllers'], function () {
     Route::get('/', ['as' => 'test', 'uses' => 'HomeController@index']);
+    Route::get('/a', [ 'uses' => 'HomeController@test']);
 
     //登录
 
@@ -38,6 +39,11 @@ Route::group(['namespace' => 'Controllers'], function () {
     Route::post('member/avatar', ['as' => 'member.avatar', 'uses' => 'MembersController@postAvatar']);
     //end
 
+    //地理位置更新
+    Route::get('member/location', 'MembersController@location');
+    Route::post('member/location', ['as' => 'member.location', 'uses' => 'MembersController@postLocation']);
+
+    //end
     //个人资料
     Route::get('member/detail', ['as'=> 'member.detail', 'uses'=>'MembersController@detail']);
     Route::post('member/detail', ['uses'=>'MembersController@postDetail']);
@@ -73,11 +79,48 @@ Route::group(['namespace' => 'Controllers'], function () {
     Route::get('settle', ['as'=>'settle', 'uses' => 'SettleController@settle']);
     Route::post('settle', [ 'uses' => 'SettleController@makeOrder']);
 
-    //订单页
+    //产品订单页
     Route::resource('orders', 'OrdersController');
 
+    //卡券订单页
+    Route::resource('cardorders', 'CardOrdersController');
 
+//商铺
+    //商铺列表页
+    Route::get('sellers', ['as'=>'sellers', 'uses'=>'SellerController@index']);
+    Route::get('sellers/search', ['as'=>'sellers.search', 'uses'=>'SellerController@search']);
 
+    //商铺详情页
+    Route::get('sellers/{id}', ['as'=>'sellers.show', 'uses'=>'SellerController@show']);
+    //商铺基本信息页
+    Route::get('sellers/detail/{id}', ['uses'=>'SellerController@detail']);
+
+//卡券
+    //卡券订单页
+    Route::resource('orders', 'OrdersController');
+    //储值卡详情页
+    Route::get('sellers/cardstored/{id}', ['uses'=>'SellerController@cardStored']);
+    //储值卡订单页
+    Route::get('sellers/orderstored/{id}', ['as'=>'order.stored','uses'=>'SellerController@orderStored']);
+    //提交储值卡订单
+    Route::post('cardstoredsettle', ['as'=>'order.stored.post','uses'=>'SettleController@makeOrderCardStored']);
+
+    //会员卡详情页
+    Route::get('sellers/cardvip/{id}', ['uses'=>'SellerController@cardVip']);
+    //会员卡领取
+    Route::post('cardvipsettle', ['as'=>'order.vip.post','uses'=>'SettleController@makeOrderCardVip']);
+
+    //代金券详情页
+    Route::get('sellers/cardvoucher/{id}', ['uses'=>'SellerController@cardVoucher']);
+    //代金券订单页
+    Route::get('sellers/ordervoucher/{id}', ['as'=>'order.voucher','uses'=>'SellerController@orderVoucher']);
+    //提交代金券订单
+    Route::post('cardvouchersettle', ['as'=>'order.voucher.post','uses'=>'SettleController@makeOrderCardVoucher']);
+
+    //优惠券详情页
+    Route::get('sellers/cardcoupon/{id}', ['uses'=>'SellerController@cardCoupon']);
+    //优惠券领取
+    Route::post('cardcouponsettle', ['as'=>'order.coupon.post','uses'=>'SettleController@makeOrderCardCoupon']);
 //end
 
 });
