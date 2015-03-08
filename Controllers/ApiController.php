@@ -23,9 +23,39 @@ class ApiController extends BaseController {
     public function getCode() {
         $phone = array_get($this->input, 'phone');
         $code = app('phonecode')->sendCode($phone);
-        return $code;
+        if($code) {
+            return $code;
+        }
+        else {
+            return 0;
+        }
     }
 
+    public function getRegister() {
+        $rules = [
+            'invite_phone' => 'required|digits:11|exists:members,phone',
+            'phone' => 'required|digits:11|unique:members',
+            'username' => 'required|min:4|unique:members',
+            'password' => 'required|min:6',
+            'token' => 'required|digits:4',
+        ];
+        $validator = \Validator::make(\Input::all(), $rules);
+        if($validator->fails()) {
+            return -2;
+        }
+
+        //手机验证码
+        $phonecode = app('phonecode');
+
+        if (!$phonecode->validate(\Input::get('phone'), \Input::get('token'))) {
+            return -1;
+        }
+
+        $m = app('Weile\Repositories\MemberRepositoryInterface');
+        if ($user = $m->create(\Input::all())) {
+            return 1;
+        }
+    }
 
 
     public function products() {

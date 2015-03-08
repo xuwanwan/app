@@ -26,10 +26,8 @@ class HomeController extends BaseController {
 	public function index()
 	{
 
-        $cat = \Category::find(21);
-        var_dump($cat->toArray());
-        $children = $cat->children()->get();
-        var_dump($children->toArray());
+        \Product::find(1)->imgs();
+        var_dump(\DB::getQueryLog());
 
 #        $node = District::find(1)->children();
 ##        var_dump($node->get()->toArray());
