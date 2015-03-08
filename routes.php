@@ -6,7 +6,6 @@ Route::pattern('id', '\d+');
 
 Route::group(['namespace' => 'Controllers'], function () {
     Route::get('/', ['as' => 'test', 'uses' => 'HomeController@index']);
-    Route::get('/a', [ 'uses' => 'HomeController@test']);
 
     //登录
 

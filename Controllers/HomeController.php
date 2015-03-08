@@ -26,6 +26,11 @@ class HomeController extends BaseController {
 	public function index()
 	{
 
+        $cat = \Category::find(21);
+        var_dump($cat->toArray());
+        $children = $cat->children()->get();
+        var_dump($children->toArray());
+
 #        $node = District::find(1)->children();
 ##        var_dump($node->get()->toArray());
 
@@ -36,7 +41,7 @@ class HomeController extends BaseController {
 #        $node = OrderedTreeDistrict::find(1)->getDescendants();
 #        $node = OrderedTreeDistrict::find(1)->getImmediateDescendants();
 
-        $m = app('Weile\Repositories\Eloquent\MemberRepository');
+#        $m = app('Weile\Repositories\Eloquent\MemberRepository');
 /*
         //获取某一ID的上级元素
         $res = $m->getAncestors(12,4);
@@ -113,10 +118,11 @@ class HomeController extends BaseController {
 #        $res = $m->getDescendants(1);
 #        var_dump($res->toArray());
 
-        $member = Member::find(1);
+#        echo 11;exit;
+#        $member = Member::find(1);
 #        var_dump($member->toArray());
-        $member = $member->reverseFriends()->get();
-        return $member;
+#        $member = $member->reverseFriends()->get();
+#        return $member;
 #        $member = $member->Friends()->get();
 #        var_dump($member->toArray());
 #        var_dump($member->toArray());
@@ -145,12 +151,12 @@ class HomeController extends BaseController {
 #        var_dump($m->orders);
 
 
-#        var_dump(\DB::getQueryLog());
+        var_dump(\DB::getQueryLog());
 #		return 'hello';
 	}
 
     public function test() {
-        return 'hello';
+        return ['test', 'a'];
     }
 
 

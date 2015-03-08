@@ -1,121 +1,55 @@
 <?php
 namespace Controllers;
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Cookie;
-
-use Symfony\Component\HttpFoundation\Response;
-
-use Curl\Curl;
 
 class ApiController extends BaseController {
 
-    protected  $curl;
+    protected $input;
 
-    public function __construct(Curl $curl) {
-        $this->curl = $curl;
-
-        $cookie_key = Config::get('session.cookie');
-        $this->curl->setCookie($cookie_key, $_COOKIE[$cookie_key]);
-        $this->curl->setOpt(CURLOPT_TIMEOUT, 1);
-
+    public function __construct() {
+        $this->input = \Input::all();
     }
 
-    //数据输出
-    public function getData() {
-        /*
-                $login = new \LoginReq();
-                $login->setUname('1234');
-                $login->setUpassword('11asdfs1');
-                $packed = $login->serializeToString();
-                die($packed);
-        */
-#		var_dump($this->curl);
-    }
-
+    //登录
     public function getLogin() {
+        $data = array_only($this->input, ['phone', 'password']);
 
-        $this->view('api.login');
+        if (\Auth::attempt($data)) {
+            return 1;
+        }
+        return 0;
+    }
+
+    public function getCode() {
+        $phone = array_get($this->input, 'phone');
+        $code = app('phonecode')->sendCode($phone);
+        return $code;
+    }
+
+
+
+    public function products() {
+        $products = app('Weile\Repositories\ProductRepositoryInterface');
+        $product_list = $products->findAllPaginated(3);
+        return $product_list;
+
 
     }
 
-    public function postLogin() {
-        if (\Auth::user()) {
-            return $this->error('already login.');
+    public function category($id) {
+        $id = intval($id);
+        if($id <= 0) {
+            $data =  \Category::roots()->get();
+        }
+        else {
+            $data = \Category::find($id)->children()->get();
         }
 
-        //请求url
-        $this->curl->post(\URL::route('auth.login'), \Input::all());
-
-
-        //处理header
-        $response_headers = $this->curl->response_headers;
-        foreach ($response_headers as $v) {
-            if (str_contains($v, ':')) {
-                list($h_key, $h_val) = explode(':', $v, 2);
-                $re_headers[$h_key] = trim($h_val);
-            }
-        }
-
-#		var_dump($response_headers);
-#		var_dump($re_headers);
-
-        $data = '1';
-
-        $response = Response::create($data, 200, $re_headers);
-
-        $response->send();
-
-    }
-
-    public function getMemberDetail() {
-        //请求url
-        $this->curl->get(\URL::route('member.detail'), ['api'=>1]);
-        echo $this->curl->response;
+        return $data->toJson();
     }
 
 
-    protected function error($msg) {
-        echo $msg;
-    }
 
 
-    public function getLoginxxx() {
-
-
-        $base_req = new \BaseReq();
-        $packed = file_get_contents("php://input");
-
-        $base_req->parseFromString($packed);
-
-#		return $base_req;
-        $resp = new \BaseResp();
-
-        $cmd = new \ReqCmdid();
-        $cmd_data = $cmd->getEnumValues();
-        switch ($base_req->getReqCmdId()) {
-
-
-            case $cmd_data['CMDID_LOGIN']:
-                $resp->setResultMsg("login succ");
-                $resp->setResultCode(1);
-
-                $loginReq = new \loginReq();
-                $loginReq->parseFromString($base_req->getReqData());
-                // $loginReq->setUname("jesus");
-                // $loginReq->setUpassword("jesus");
-                $resp->setRespData($loginReq->serializeToString());
-                break;
-
-            default:
-                $resp->setResultMsg('xxxx');
-                break;
-        }
-
-        $packed = $resp->serializeToString();
-        return $packed;
-    }
 
 }

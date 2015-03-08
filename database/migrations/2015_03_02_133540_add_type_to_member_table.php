@@ -16,7 +16,7 @@ class AddTypeToMemberTable extends Migration {
 		{
             $table->tinyInteger('type')->after('login');
             $table->integer('district')->after('type');
-            $table->string('geo_hash')->after('district');
+            $table->string('geohash')->after('district');
 		});
 	}
 
