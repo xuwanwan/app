@@ -2,6 +2,7 @@
 namespace Controllers;
 
 use Weile\District;
+use Weile\OrderedTreeDistrict;
 use Weile\Repositories\MemberRepositoryInterface;
 
 class MemberDeliveriesController extends BaseController {
@@ -35,7 +36,8 @@ class MemberDeliveriesController extends BaseController {
 	public function create()
 	{
 		//
-        $form_data = (new District())->provinceSelect();
+#        $form_data = (new District())->provinceSelect();
+        $form_data = OrderedTreeDistrict::selectOptions();
         $this->view('member.delivery-create', compact('form_data'));
 	}
 
@@ -81,7 +83,7 @@ class MemberDeliveriesController extends BaseController {
 	public function edit($id)
 	{
 		//
-        $form_data = (new District())->provinceSelect();
+        $form_data = OrderedTreeDistrict::selectOptions();
         $delivery = $this->member->delivery()->find($id);
         $this->view('member.delivery-edit', compact('form_data', 'delivery'));
 	}
