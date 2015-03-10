@@ -57,6 +57,7 @@ return array(
 		'会员管理'	=> ['members'],
         '分类管理'  => ['categories'],
         '产品管理' => ['products', 'product_tags'],
+        '特产管理' => ['company','company_products', 'company_categories'],
         '订单管理' => ['orders'],
         '代理管理' => ['agent','profit_percent'],
         '商家管理' => ['seller', 'seller_category', 'card_stored', 'card_vip', 'card_voucher', 'card_coupon'],

@@ -15,7 +15,8 @@ class ApiController extends BaseController {
         $data = array_only($this->input, ['phone', 'password']);
 
         if (\Auth::attempt($data)) {
-            return 1;
+            return \Auth::user();
+#            return 1;
         }
         return 0;
     }
