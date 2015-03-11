@@ -159,18 +159,6 @@ return [
         return true;
     },
 
-    'rules' => array(
-        'name' => 'required|max:255',
-        'params' => 'required|max:255',
-        'price' => 'required|integer',
-        'image' => 'required',
-        'market_price' => 'required|integer',
-        'freight' => 'integer',
-        'category' => 'required',
-        'district' => 'required',
-        'description' => 'required',
-        'activities_introduce' => 'required',
-    ),
 
     'form_width' => 500,
 

@@ -46,7 +46,7 @@ class PhoneCode {
 
 	public function validate($phone, $token) {
 
-		$reminder = (array) $this->db->where('phone', $phone)->where('token', $token)->first();
+		$reminder = (array) $this->db->where('phone', $phone)->where('token', $token)->orderBy('created_at', 'desc')->first();
 
 		if( $reminder && ! $this->reminderExpired($reminder) ) {
 			$this->delete($phone);
