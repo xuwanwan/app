@@ -33,6 +33,7 @@ class ApiController extends BaseController {
     }
 
     public function getRegister() {
+        $return = [];
         $rules = [
             'invite_phone' => 'required|digits:11|exists:members,phone',
             'phone' => 'required|digits:11|unique:members',
@@ -42,20 +43,27 @@ class ApiController extends BaseController {
         ];
         $validator = \Validator::make(\Input::all(), $rules);
         if($validator->fails()) {
-            return -2;
+            $return['type'] = 0;
+            $return['msg'] = $validator->messages();
+            return $return;
         }
 
         //手机验证码
         $phonecode = app('phonecode');
 
         if (!$phonecode->validate(\Input::get('phone'), \Input::get('token'))) {
-            return -1;
+            $return['type'] = 0;
+            $return['msg'] = '验证码错误！';
+            return $return;
         }
 
         $m = app('Weile\Repositories\MemberRepositoryInterface');
         if ($user = $m->create(\Input::all())) {
-            return 1;
+            $return['type'] = 1;
+            $return['msg'] = '注册成功！';
+            return $return;
         }
+        return $return;
     }
 
 
