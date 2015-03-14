@@ -26,7 +26,7 @@ class CompanyProduct extends \Eloquent {
         return $this->belongsTo('CompanyCategory', 'category', 'id');
     }
     public function companies() {
-        return $this->belongsTo('Company', 'category', 'id');
+        return $this->belongsTo('Company', 'company_id', 'id');
     }
 
     public function districts() {
