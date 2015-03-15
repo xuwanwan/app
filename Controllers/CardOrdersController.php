@@ -33,7 +33,7 @@ class CardOrdersController extends BaseController {
 #        var_dump($orders);
 #        var_dump($orders->toArray());
         foreach($orders as $v) {
-            var_dump($v->cardvips->first()->toArray());
+            var_dump($v->cardvips->first());
             var_dump($v->cardcoupons->first());
             break;
         }

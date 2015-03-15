@@ -23,6 +23,12 @@ class Member extends \Eloquent {
         }
     }
 
+    //邀请人
+    public function friends()
+    {
+        return $this->belongsToMany('Member', 'friends_users', 'member_id', 'friend_id');
+    }
+
     public function getTypeAttribute($type) {
         $return = '';
         switch($type) {

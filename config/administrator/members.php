@@ -30,6 +30,12 @@ return [
             'type' => 'password',
         ],
 
+        'friends' => [
+            'title' => '邀请人',
+            'type' => 'relationship',
+            'name_field' => 'username',
+        ]
+
     ],
 
     'filters' => [
@@ -44,6 +50,9 @@ return [
         ],
     ],
 
+    'query_filter' => function($query) {
+        $query->where('type', '=', 0);
+    },
     'permission' => function() {
         return Sentry::hasAccess('users');
     }

@@ -37,6 +37,11 @@ return [
             'title' => '名称',
             'type' => 'text',
         ],
+        'friends' => [
+            'title' => '邀请人',
+            'type' => 'relationship',
+            'name_field' => 'username',
+        ],
         'phone' => [
             'title' => '电话',
         ],
