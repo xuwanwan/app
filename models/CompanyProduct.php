@@ -59,7 +59,11 @@ class CompanyProduct extends \Eloquent {
 
     public function save(array $options=[]) {
         $value = array_pull($this->attributes, 'detail_pre');
-  #      var_dump($value);
+#        $recommend = Input::get('recommend')=='true'?1:0;
+#        $advertise = Input::get('advertise')=='true'?1:0;
+#        $this->attributes['recommend'] = $recommend;
+#        $this->attributes['advertise'] = $advertise;
+#        var_dump($recommend, $advertise);exit;
         parent::save($options);
 
 

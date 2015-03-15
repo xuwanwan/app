@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateAdvertiseTable extends Migration {
+class CreateMemberCollectionTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,14 +12,12 @@ class CreateAdvertiseTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('advertise', function(Blueprint $table)
+		Schema::create('member_collection', function(Blueprint $table)
 		{
 			$table->increments('id');
-            $table->string('logo');
-            $table->integer('company_id');
-            $table->text('introduce');
-            $table->text('detail');
-            $table->string('url');
+            $table->integer('member_id');
+            $table->integer('seller_id');
+            $table->integer('product_id');
 			$table->timestamps();
 		});
 	}
@@ -32,7 +30,7 @@ class CreateAdvertiseTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('advertise');
+		Schema::drop('member_collection');
 	}
 
 }

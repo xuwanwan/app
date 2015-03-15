@@ -128,6 +128,14 @@ return [
             'title' => '图文详情',
 
         ],
+        'recommend' => [
+            'type' => 'bool',
+            'title' => '是否推荐',
+        ],
+        'advertise' => [
+            'type' => 'bool',
+            'title' => '是否设置广告',
+        ],
         /*`
         'description' => array(
             'title' => 'Image',

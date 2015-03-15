@@ -35,6 +35,11 @@ return [
                 array(383, 276, 'fit', public_path() . '/uploads/products/thumbs/full/', 100)
             )
         ],
+
+        'tags' => [
+            'title' => '关联标签',
+            'type' => 'relationship',
+        ],
         'introduce' => [
             'title' => '广告说明',
             'type' => 'textarea',
@@ -49,6 +54,9 @@ return [
         'detail' => [
             'type' => 'wysiwyg',
             'title' => '图文详情',
+        ],
+        'url' => [
+            'title' => 'WEB链接',
         ]
 
 

@@ -2,6 +2,8 @@
 namespace Controllers;
 
 
+use Weile\Member;
+
 class ApiController extends BaseController {
 
     protected $input;
@@ -21,6 +23,7 @@ class ApiController extends BaseController {
         return 0;
     }
 
+    //注册验证码
     public function getCode() {
         $phone = array_get($this->input, 'phone');
         $code = app('phonecode')->sendCode($phone);
@@ -32,6 +35,100 @@ class ApiController extends BaseController {
         }
     }
 
+    //重置密码验证码
+    //http://weile.app/api/remind-code?phone=18002590105
+    public function getRemindCode() {
+        $return = [];
+        switch ($response = \Phone::remind(\Input::only('phone')))
+        {
+            case \Phone::INVALID_USER:
+                $return['type'] = 0;
+                $return['msg'] = '不存在该用户！';
+                break;
+
+            case \Phone::REMINDER_SENT:
+                $return['type'] = 1;
+                $return['msg'] = '验证码发送成功！';
+                break;
+            default:
+                $return['type'] = 0;
+                $return['msg'] = '网络异常，请重试！';
+        }
+        return $return;
+    }
+
+    //重置密码
+    //http://weile.app/api/reset-password?phone=18002590105&password=111&password_confirmation&token=111
+    public function getResetPassword() {
+        $return = [];
+        $credentials = \Input::only('password', 'token');
+        $member = Member::find(\Input::get('uid'));
+        if(empty($member)) {
+            $return['type'] = 0;
+            $return['msg'] = '不存在该用户，重置失败！';
+            return $return;
+        }
+        $credentials['phone'] = $member->phone;
+        $credentials['password_confirmation'] = $credentials['password'];
+
+        $response = \Phone::reset($credentials, function($user, $password)
+        {
+            $user->password = $password;
+
+            $user->save();
+        });
+
+        switch ($response)
+        {
+            case \Phone::INVALID_PASSWORD:
+                $return['type'] = 0;
+                $return['msg'] = '密码设置不正确，重置失败！';
+                break;
+            case \Phone::INVALID_TOKEN:
+                $return['type'] = 0;
+                $return['msg'] = '验证码错误，重置失败！';
+                break;
+            case \Phone::INVALID_USER:
+                $return['type'] = 0;
+                $return['msg'] = '不存在该用户，重置失败！';
+                break;
+            case \Phone::PASSWORD_RESET:
+                $return['type'] = 1;
+                $return['msg'] = '重置成功！';
+                break;
+            default:
+                $return['type'] = 0;
+                $return['msg'] = '重置失败！';
+        }
+        return $return;
+    }
+    //http://weile.app/api/new-password?uid=1&password=111&oldpassword=1111
+    public function getNewPassword() {
+        $return = [];
+        $member = Member::find(\Input::get('uid'));
+        if(empty($member)) {
+            $return['type'] = 0;
+            $return['msg'] = '不存在该用户，重置失败！';
+            return $return;
+        }
+
+        $oldpwd = \Input::get('oldpassword');
+
+        if(! \Hash::check($oldpwd, $member->password)) {
+            $return['type'] = 0;
+            $return['msg'] = '用户密码错误，重置失败！';
+            return $return;
+        }
+
+        $member->password = \Input::get('password');
+        $member->save();
+        $return['type'] = 1;
+        $return['msg'] = '设置新密码成功！';
+        return $return;
+
+    }
+
+    //注册
     public function getRegister() {
         $return = [];
         $rules = [

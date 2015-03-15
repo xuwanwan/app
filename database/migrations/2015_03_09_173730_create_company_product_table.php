@@ -29,7 +29,9 @@ class CreateCompanyProductTable extends Migration {
             $table->decimal('rank');
             $table->decimal('evaluation');
             $table->string('image');
-            $table->string('company_id');
+            $table->integer('company_id');
+            $table->tinyInteger('recommend');
+            $table->tinyInteger('advertise');
 			$table->timestamps();
 		});
 	}
