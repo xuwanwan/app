@@ -34,6 +34,11 @@ return [
             'title' => '邀请人',
             'type' => 'relationship',
             'name_field' => 'username',
+        ],
+        'adTags' => [
+            'title' => '用户广告标签设置',
+            'type' => 'relationship',
+            'name_field'=> 'name',
         ]
 
     ],

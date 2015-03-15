@@ -29,6 +29,10 @@ class Member extends \Eloquent {
         return $this->belongsToMany('Member', 'friends_users', 'member_id', 'friend_id');
     }
 
+    public function adTags() {
+        return $this->belongsToMany('AdvertiseTag', 'advertise_tag_member', 'member_id', 'advertise_tag_id');
+    }
+
     public function getTypeAttribute($type) {
         $return = '';
         switch($type) {
