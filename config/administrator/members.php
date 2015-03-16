@@ -33,6 +33,8 @@ return [
         'friends' => [
             'title' => '邀请人',
             'type' => 'relationship',
+            'autocomplete' => true,
+            'num_options' => 15,
             'name_field' => 'username',
         ],
         'adTags' => [

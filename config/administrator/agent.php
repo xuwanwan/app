@@ -40,7 +40,10 @@ return [
         'friends' => [
             'title' => '邀请人',
             'type' => 'relationship',
+            'autocomplete' => true,
+            'num_options' => 5,
             'name_field' => 'username',
+            'search_fields' => array("CONCAT(phone, ' ', username)"),
         ],
         'phone' => [
             'title' => '电话',

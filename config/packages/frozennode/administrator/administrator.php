@@ -53,15 +53,14 @@ return array(
 	 */
 	'menu' => array(
 //		'users',
-        '广告管理' => ['advertise','advertise_tag'],
+        '用户管理'	=> ['members'],
+        '代理商管理' => ['agent','profit_percent'],
         '特产管理' => ['company','company_products', 'company_categories'],
-        '订单管理' => ['orders'],
-        '代理管理' => ['agent','profit_percent'],
         '商家管理' => ['seller', 'seller_category', 'card_stored', 'card_vip', 'card_voucher', 'card_coupon'],
-        '后台用户管理' => ['users', 'groups', 'permissions'],
-        '会员管理'	=> ['members'],
-        '分类管理'  => ['categories'],
-        '产品管理' => ['products', 'product_tags'],
+        '广告管理' => ['advertise','advertise_tag'],
+        '产品管理' => ['products', 'categories', 'product_tags'],
+        '订单管理' => ['orders'],
+        '后台管理' => ['users', 'groups', 'permissions'],
 		),
 
 	/**
@@ -95,7 +94,7 @@ return array(
 	 *
 	 * @type string
 	 */
-	'home_page' => 'users',
+	'home_page' => 'members',
 
 	/**
 	 * The route to which the user will be taken when they click the "back to site" button
