@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder {
 //		$this->call('SelectSexTableSeeder');
 //        $this->call('CategoryTableSeeder');
 //        $this->call('OrderedTreeDistrictTableSeeder');
+        $this->call('BankInfoTableSeeder');
 	}
 
 }

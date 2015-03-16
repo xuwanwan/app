@@ -163,6 +163,59 @@ class ApiController extends BaseController {
         return $return;
     }
 
+    public function getMemberBankcardList() {
+        $uid = \Input::get('uid');
+        $member = \Weile\Member::find($uid);
+        $cardList = $member->bankcard;
+
+        if($cardList) {
+            return ['type'=> 1, 'data'=>$cardList->toArray(), 'msg'=>'数据获取成功'];
+        }
+        else {
+            return ['type' => 0, 'msg' => '没有信用卡数据'];
+        }
+    }
+
+    public function getAddBankcard() {
+        $data = \Input::all();
+        $uid = array_pull($data, 'uid');
+        $member = \Weile\Member::find($uid);
+        if($member == null) {
+            return $this->errorMsg('不存在该用户');
+        }
+
+        $fields = array_only($data, ['username', 'card_number', 'bank_id', 'district', 'district_detail']);
+        $de = new \Weile\MemberBankcard($fields);
+        $member->bankcard()->save($de);
+
+        return $this->successMsg([], '添加银行卡成功');
+    }
+
+    public function getDeleteBankcard() {
+        $data = \Input::all();
+        $uid = array_pull($data, 'uid');
+        $member = \Weile\Member::find($uid);
+        if($member == null) {
+            return $this->errorMsg('不存在该用户');
+        }
+
+        $card_ida = explode(',', $data['card_ids']);
+
+        $card = $member->bankcard()->whereIn('id', $card_ida);
+#        var_dump($card->toArray());
+        $card->delete();
+        return $this->successMsg([], '解除绑定成功');
+
+    }
+
+    protected function errorMsg($msg='没有数据') {
+        return ['type'=>0, 'msg'=>$msg];
+    }
+
+    protected function successMsg($data = [], $msg='请求成功') {
+        return ['type'=>1, 'msg'=>$msg, 'data'=>$data];
+    }
+
 
     public function products() {
         $products = app('Weile\Repositories\ProductRepositoryInterface');

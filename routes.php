@@ -58,9 +58,12 @@ Route::group(['namespace' => 'Controllers'], function () {
     //收货地址
     Route::resource('member/delivery', 'MemberDeliveriesController');
     // //设置默认
-
     Route::get('member/delivery/default/{id}', ['uses'=>'MemberDeliveriesController@setDefault']);
 
+    //银行卡
+    Route::resource('member/bankcard', 'MemberBankCardsController');
+    // //设置默认
+    Route::get('member/bankcard/default/{id}', ['uses'=>'MemberBankCardsController@setDefault']);
 
 
 //产品

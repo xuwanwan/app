@@ -38,7 +38,7 @@ return [
             'type' => 'text',
         ],
         'friends' => [
-            'title' => '邀请人',
+            'title' => '邀请人(输入电话号码搜索)',
             'type' => 'relationship',
             'autocomplete' => true,
             'num_options' => 5,

@@ -30,6 +30,7 @@ class CreateSellerTable extends Migration {
             $table->decimal('longitude', 18, 8);
             $table->string('geohash');
             $table->decimal('evaluation', 8, 1);
+            $table->tinyInteger('recommend');
 			$table->timestamps();
 		});
 	}

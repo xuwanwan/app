@@ -219,7 +219,19 @@ class MemberRepository extends AbstractRepository implements MemberRepositoryInt
         return ! in_array(strtolower($username), Config::get('config.forbidden_usernames'));
     }
 
+    //银行卡
+    public function createBankcard(Member $member,array $data) {
+        $fields = array_only($data, ['username', 'card_number', 'bank_id', 'district', 'district_detail']);
+        $de = new \Weile\MemberBankcard($fields);
+        $member->bankcard()->save($de);
+    }
+    public function updateBankcard(Member $member, $id,array $data) {
+        $fields = array_only($data, ['username', 'card_number', 'bank_id', 'district', 'district_detail']);
+        $member->bankcard()->where('id', '=', $id)->update($fields);
+    }
+    //end
 
+    //收货地址
     public function createDelivery(Member $member,array $data) {
         $fields = array_only($data, ['username', 'phone', 'postalcode', 'district', 'detail']);
         $de = new MemberDelivery($fields);
@@ -230,6 +242,9 @@ class MemberRepository extends AbstractRepository implements MemberRepositoryInt
         $fields = array_only($data, ['username', 'phone', 'postalcode', 'district', 'detail']);
         $member->delivery()->where('id', '=', $id)->update($fields);
     }
+    //end
+
+
     public function getRegistrationForm()
     {
         return app('Weile\Services\Forms\RegistrationForm');
@@ -237,5 +252,9 @@ class MemberRepository extends AbstractRepository implements MemberRepositoryInt
 
     public function getMemberDeliveryForm() {
         return app('Weile\Services\Forms\MemberDeliveryForm');
+    }
+
+    public function getMemberBankcardForm() {
+        return app('Weile\Services\Forms\MemberBankcardForm');
     }
 }

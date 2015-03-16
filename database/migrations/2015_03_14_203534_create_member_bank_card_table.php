@@ -17,9 +17,11 @@ class CreateMemberBankCardTable extends Migration {
 			$table->increments('id');
             $table->integer('bank_id');
             $table->string('card_number');
+            $table->string('username');
             $table->integer('district');
             $table->string('district_detail');
             $table->integer('member_id');
+            $table->tinyInteger('default');
 			$table->timestamps();
 		});
 	}

@@ -130,7 +130,7 @@ return [
         ],
         'recommend' => [
             'type' => 'bool',
-            'title' => '是否推荐',
+            'title' => '是否首页推荐',
         ],
         'advertise' => [
             'type' => 'bool',

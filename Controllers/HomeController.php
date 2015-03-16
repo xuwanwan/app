@@ -26,8 +26,9 @@ class HomeController extends BaseController {
 	public function index()
 	{
 
-        \Product::find(1)->imgs();
-        var_dump(\DB::getQueryLog());
+        $m = Member::find(3);
+
+        var_dump($m);
 
 #        $node = District::find(1)->children();
 ##        var_dump($node->get()->toArray());

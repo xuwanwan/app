@@ -124,6 +124,10 @@ return [
             'height' => '130',
             'title' => '设施服务',
         ],
+        'recommend' => [
+            'type' => 'bool',
+            'title' => '是否首页推荐',
+        ],
         'latitude' => [
             'title' => '经度',
         ],
