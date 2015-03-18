@@ -4,16 +4,17 @@ namespace Controllers;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Redirect;
-
+use Illuminate\Support\MessageBag;
 
 class BaseController extends Controller {
 
 
-	protected $layout = 'layouts.main';
-
+    protected $layout = 'layouts.main';
+    protected $messages = null;
 
 	public function __construct() {
 		$this->beforeFilter('csrf', ['on' => 'post']);
+        $this->messages = new MessageBag();
 	}
 
 	protected function setupLayout()

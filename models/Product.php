@@ -20,7 +20,7 @@ class Product extends \Eloquent {
 //    public function params() {
 //        return $this->belongsToMany('ProdcutParam', 'product_product_param', 'product_id', 'product_param_id');
 //    }
-
+    
     public function imgs() {
         return $this->hasMany('ProductImg', 'products_id');
     }
@@ -36,7 +36,9 @@ class Product extends \Eloquent {
     public function districts() {
         return $this->belongsTo('Weile\OrderedTreeDistrict', 'district', 'id');
     }
-
+    public  function reviews() {
+        return $this->hasMany('ProductReviews', 'product_id');
+    }
     public function getDistrictPathAttribute() {
         return $this->districts->path;
     }

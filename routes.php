@@ -73,7 +73,11 @@ Route::group(['namespace' => 'Controllers'], function () {
     Route::get('products/search', ['as'=>'products.search', 'uses'=>'ProductSearchController@search']);
 
     //产品详情页 添加到购物车、关注
-
+    
+    //产品评论页面
+    Route::get('products/{id}/reviews', ['as'=>'products.reviews', 'uses'=>'ProductController@reviews']);
+    Route::post('products/{id}/reviews', ['as'=>'products.reviews', 'uses'=>'ProductController@postReviews','before'=>'auth']);
+    //Route::post('products/{id}/reviews', ['as'=>'products.reviews', 'uses'=>'ProductController@postReviews']);
     //购物车操作 增、删、查、改（增加某一产品数量）。
     Route::resource('shopcart', 'ShopCartController');
 

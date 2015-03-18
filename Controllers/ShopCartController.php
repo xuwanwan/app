@@ -17,6 +17,7 @@ class ShopCartController extends BaseController {
 	{
 #        \Cart::destroy();return;
         $contents = \Cart::content()->paginate(5);
+        //$contents = \Cart::content()->get();
 //        foreach ($contents as $row) {
 ////            echo 'You have ' . $row->qty . ' items of ' . $row->product->name . ' with description: "' . $row->product->description . '" in your cart.';
 //        }
